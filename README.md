@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto Laravel 10 - Gerenciamento de Informações Esportivas (API REST)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requisitos Necessários
 
-## About Laravel
+Para rodar este projeto Laravel 10, certifique-se de ter os seguintes requisitos instalados no seu ambiente:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.1 ou superior
+- Composer 2.x
+- MySQL 5.7 ou superior / MariaDB
+- Git (opcional, mas recomendado)
+- Extensões PHP necessárias:
+  - `mbstring`
+  - `openssl`
+  - `pdo`
+  - `json`
+  - `xml`
+  - `curl`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Passos para Configuração do Ambiente
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Siga os passos abaixo para configurar o ambiente e rodar o projeto:
 
-## Learning Laravel
+1. Clone o repositório do projeto:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+````
+    git clone https://github.com/joaocg/t4tech
+````
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Navegue até o diretório do projeto:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+````
+cd t4tech
+````
 
-## Laravel Sponsors
+3. Instale as dependências do PHP usando o Composer:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+````
+composer install
+````
 
-### Premium Partners
+4. Copie o arquivo .env.example para .env e configure as variáveis de ambiente, como conexão ao banco de dados e chave da API externa:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+````
+cp .env.example .env
+````
 
-## Contributing
+5. Gere a chave da aplicação Laravel:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+````
+php artisan key:generate
+````
 
-## Code of Conduct
+6. Configure o banco de dados no arquivo .env, alterando as variáveis DB_HOST, DB_DATABASE, DB_USERNAME e DB_PASSWORD conforme sua configuração local.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7. Execute as migrações para criar as tabelas no banco de dados:
 
-## Security Vulnerabilities
+````
+php artisan migrate
+````
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+8. Popule o banco de dados com dados fictícios:
 
-## License
+````
+php artisan db:seed
+````
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Como Rodar a Aplicação
+1. Inicie o servidor de desenvolvimento Laravel:
+
+````
+php artisan serve
+````
+
+A aplicação estará acessível em: http://localhost:8000
+
+## Como Rodar os Testes
+Este projeto utiliza PHPUnit para testes de unidade e de integração.
+
+1. Para rodar os testes, execute o seguinte comando:
+
+````
+php artisan test
+````
+
+Ou, se preferir, você pode rodar apenas um grupo de testes específico:
+
+````
+php artisan test --filter=NomeDoTeste
+````
+
+2. Se você quiser rodar os testes utilizando um banco de dados em memória (sqlite), configure o driver do banco de dados no arquivo .env.testing da seguinte forma:
+
+env
+````
+DB_CONNECTION=sqlite
+DB_DATABASE=:memory:
+````
+Isso garantirá que os testes utilizem um banco em memória e que não modifiquem o banco de dados principal.
+
+## Como Utilizar o Comando de Importação de Dados
+O projeto inclui um comando para importar dados esportivos de uma API externa.
+
+### Executar o Comando Manualmente
+Para importar dados manualmente, use o seguinte comando Artisan:
+
+````
+php artisan sports-data:import
+````
+Este comando irá buscar as informações mais recentes de Players, Teams e Games, e armazená-las no banco de dados.
+
+### Execução Automática com Cron
+Esse comando foi configurado para ser executado automaticamente uma vez por dia utilizando o cron. Para isso, é necessário adicionar a seguinte entrada na sua configuração de cron:
+
+````
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+````
+
+Essa entrada no cron vai verificar o agendamento a cada minuto e executar os comandos agendados. O comando de importação de dados será executado uma vez por dia.
+
+
+
+
+

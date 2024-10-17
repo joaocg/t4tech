@@ -9,7 +9,7 @@ class GameRepository implements GameRepositoryInterface
 {
     protected $model;
 
-    public function __construct(Game $game)
+    public function __construct(?Game $game)
     {
         $this->model = $game;
     }
@@ -27,6 +27,11 @@ class GameRepository implements GameRepositoryInterface
     public function create(array $data): mixed
     {
         return $this->model->create($data);
+    }
+
+    public function updateOrCreate(mixed $checking, array $data): mixed
+    {
+        return Game::updateOrCreate($checking, $data);
     }
 
     public function update($id, array $data): mixed

@@ -185,4 +185,8 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'X_AUTHORIZATION_KEY' => env('X_AUTHORIZATION_KEY'), 
+
+    'BALL_DONT_LIE_API_KEY' => env('BALL_DONT_LIE_API_KEY'), 
+
 ];

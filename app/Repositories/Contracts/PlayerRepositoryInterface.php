@@ -5,14 +5,14 @@ namespace App\Repositories\Contracts;
 interface PlayerRepositoryInterface
 {
     /**
-     * Get all teams.
+     * Get all players.
      *
      * @return mixed
      */
     public function all(): mixed;
 
     /**
-     * Find a team by ID.
+     * Find a player by ID.
      *
      * @param int $id
      * @return mixed
@@ -20,7 +20,7 @@ interface PlayerRepositoryInterface
     public function find(int $id): mixed;
 
     /**
-     * Create a new team.
+     * Create a new player.
      *
      * @param array $data
      * @return mixed
@@ -28,7 +28,15 @@ interface PlayerRepositoryInterface
     public function create(array $data): mixed;
 
     /**
-     * Update a team by ID.
+     * Create a new player.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function updateOrCreate(mixed $checking, array $data): mixed;
+
+    /**
+     * Update a player by ID.
      *
      * @param int $id
      * @param array $data
@@ -37,7 +45,7 @@ interface PlayerRepositoryInterface
     public function update(int $id, array $data): mixed;
 
     /**
-     * Delete a team by ID.
+     * Delete a player by ID.
      *
      * @param int $id
      * @return bool

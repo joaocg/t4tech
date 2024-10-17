@@ -12,7 +12,9 @@ class Kernel extends HttpKernel
      * @var \class-string[]
      */
     protected $routeMiddleware = [
+        'auth' => \App\Http\Middleware\Authenticate::class,
         'x.authorization' => VerifyAuthorization::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 
     /**

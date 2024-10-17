@@ -9,7 +9,6 @@ class Team extends Model
 {
     use HasFactory;
 
-    public function findOrFail(int $id)
-    {
-    }
+    protected $fillable = ['id', 'name', 'city', 'abbreviation', 'conference', 'division'];
+
 }

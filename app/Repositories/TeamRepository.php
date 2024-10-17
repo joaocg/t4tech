@@ -9,7 +9,7 @@ class TeamRepository implements TeamRepositoryInterface
 {
     protected $model;
 
-    public function __construct(Team $team)
+    public function __construct(?Team $team)
     {
         $this->model = $team;
     }
@@ -27,6 +27,11 @@ class TeamRepository implements TeamRepositoryInterface
     public function create(array $data): mixed
     {
         return $this->model->create($data);
+    }
+
+    public function updateOrCreate(mixed $checking, array $data): mixed
+    {
+        return Team::updateOrCreate($checking, $data);
     }
 
     public function update(int $id, array $data): mixed

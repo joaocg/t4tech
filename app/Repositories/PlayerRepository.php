@@ -7,32 +7,44 @@ use App\Repositories\Contracts\PlayerRepositoryInterface;
 
 class PlayerRepository implements PlayerRepositoryInterface
 {
-    public function all()
+
+    protected $model;
+
+    public function __construct(?Player $player)
+    {
+        $this->model = $player;
+    }
+
+    public function all(): mixed
     {
         return Player::all();
     }
 
-    public function find($id)
+    public function find($id): mixed
     {
         return Player::findOrFail($id);
     }
 
-    public function create(array $data)
+    public function create(array $data): mixed
     {
         return Player::create($data);
     }
 
-    public function update($id, array $data)
+    public function updateOrCreate(mixed $checking, array $data): mixed
+    {
+        return Player::updateOrCreate($checking, $data);
+    }
+
+    public function update($id, array $data): mixed
     {
         $player = $this->find($id);
         $player->update($data);
         return $player;
     }
 
-    public function delete($id)
+    public function delete($id): bool
     {
         $player = $this->find($id);
-        $player->delete();
-        return $player;
+        return $player->delete();
     }
 }
