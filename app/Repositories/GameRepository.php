@@ -9,31 +9,55 @@ class GameRepository implements GameRepositoryInterface
 {
     protected $model;
 
+    /**
+     * @param Game|null $game
+     */
     public function __construct(?Game $game)
     {
         $this->model = $game;
     }
 
+    /**
+     * @return mixed
+     */
     public function all(): mixed
     {
         return $this->model->all();
     }
 
-    public function find($id): mixed
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function find(int $id): mixed
     {
         return $this->model->findOrFail($id);
     }
 
+    /**
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data): mixed
     {
         return $this->model->create($data);
     }
 
+    /**
+     * @param mixed $checking
+     * @param array $data
+     * @return mixed
+     */
     public function updateOrCreate(mixed $checking, array $data): mixed
     {
         return Game::updateOrCreate($checking, $data);
     }
 
+    /**
+     * @param $id
+     * @param array $data
+     * @return mixed
+     */
     public function update($id, array $data): mixed
     {
         $game = $this->model->findOrFail($id);
@@ -41,7 +65,11 @@ class GameRepository implements GameRepositoryInterface
         return $game;
     }
 
-    public function delete($id): bool
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id): bool
     {
         $game = $this->model->findOrFail($id);
         return $game->delete();
