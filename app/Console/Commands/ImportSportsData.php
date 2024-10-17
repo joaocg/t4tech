@@ -32,11 +32,11 @@ class ImportSportsData extends Command
     public function handle()
     {
         // Dispatch the jobs
-        // dispatch(new ImportTeamsJob());
-        // $this->info('Teams import job dispatched.');
+         dispatch(new ImportTeamsJob());
+         $this->info('Teams import job dispatched.');
 
-        // dispatch(new ImportPlayersJob());
-        // $this->info('Players import job dispatched.');
+         dispatch(new ImportPlayersJob());
+         $this->info('Players import job dispatched.');
 
         dispatch(new ImportGamesJob());
         $this->info('Games import job dispatched.');

@@ -119,5 +119,11 @@ Essa entrada no cron vai verificar o agendamento a cada minuto e executar os com
 
 
 
-
-
+### Autorização / Autenticação:
+````
+Todas as requisições da API precisão ter o cabeçalho
+X-Authorization. 
+````
+````
+Uma vez logado o usuário utiliza o access_token do padrão sanctum.
+````
