@@ -12,30 +12,57 @@ use Illuminate\Support\Facades\Cache;
 class BallDontLieService
 {
     protected $baseUrl = 'https://api.balldontlie.io/v1/';
-    protected $apiKey; // Property to hold the API key
+
+    /**
+     * Property to hold the API key
+     * @var string
+     */
+    protected $apiKey;
+
+    /**
+     * @var PlayerRepository
+     */
     protected $playerRepository;
+
+    /**
+     * @var TeamRepository
+     */
     protected $teamRepository;
+
+    /**
+     * @var GameRepository
+     */
     protected $gameRepository;
+
+    /**
+     * @var Client
+     */
     protected $client;
+
+    /**
+     * @var int
+     */
     protected $maxRequestsPerMinute = 30;
 
     public function __construct()
     {
-        // Option 1: You can set the API key from environment variables for security
-        $this->apiKey = 'eabe2808-4427-4606-832d-c83bf8f1cbc3';//env('BALL_DONT_LIE_API_KEY');
+        /**
+         * Option 1: You can set the API key from environment variables for security
+         */
+        $this->apiKey = config('app.BALL_DONT_LIE_API_KEY');
         $this->playerRepository = new PlayerRepository(NULL);
         $this->teamRepository = new TeamRepository(NULL);
         $this->gameRepository = new GameRepository(NULL);
         $this->client = new Client();
     }
-    
+
     /**
      * Perform the API request using cURL
      * @param string|null $cursor
      * @param int $perPage
      * @return array|null
      */
-    public function performApiRequest($resource, $cursor = null, $perPage = 100)
+    public function performApiRequest($resource, string $cursor = null, int $perPage = 100): ?array
     {
         // Cache key to store the response
         $cacheKey = $resource.'_cursor_' . ($cursor ?? 'start');
@@ -90,7 +117,7 @@ class BallDontLieService
      * Fetch all teams with rate limiting and pagination using next_cursor
      * @return array
      */
-    public function fetchAllTeams()
+    public function fetchAllTeams(): array
     {
         $teams = [];
         $cursor = null;
@@ -105,7 +132,7 @@ class BallDontLieService
 
             // Fetch teams from API
             $response = $this->performApiRequest('teams', $cursor);
-            
+
             // If response is valid, append data
             if (isset($response['data']) && (sizeof($response['data']) > 0)) {
                 foreach ($response['data'] as $teamData) {
@@ -139,7 +166,7 @@ class BallDontLieService
      * Fetch all players with rate limiting and pagination using next_cursor
      * @return array
      */
-    public function fetchAllPlayers()
+    public function fetchAllPlayers(): array
     {
         $players = [];
         $cursor = null;
@@ -188,7 +215,7 @@ class BallDontLieService
      * Fetch all games with rate limiting and pagination using next_cursor
      * @return array
      */
-    public function fetchAllGames()
+    public function fetchAllGames(): array
     {
         $games = [];
         $cursor = null;
