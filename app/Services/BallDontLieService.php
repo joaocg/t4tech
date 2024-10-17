@@ -58,16 +58,22 @@ class BallDontLieService
 
     /**
      * Perform the API request using cURL
+     * @param string $resource
      * @param string|null $cursor
      * @param int $perPage
      * @return array|null
      */
-    public function performApiRequest($resource, string $cursor = null, int $perPage = 100): ?array
+    public function performApiRequest(string $resource, string $cursor = null, int $perPage = 100): ?array
     {
-        // Cache key to store the response
+        /**
+         * Cache key to store the response
+         */
         $cacheKey = $resource.'_cursor_' . ($cursor ?? 'start');
         return Cache::remember($cacheKey, 60 * 60, function () use ($cursor, $perPage, $resource) {
-            // Initialize cURL
+
+            /**
+             * Initialize cURL
+             */
             $ch = curl_init();
             $url = $this->baseUrl . $resource . '?per_page=' . $perPage;
             if ($cursor) {
@@ -77,7 +83,10 @@ class BallDontLieService
             if ($resource === 'games') {
                 $url .= '&seasons[]=2023';
             }
-            // Set the URL and headers
+
+            /**
+             * Set the URL and headers
+             */
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -85,21 +94,31 @@ class BallDontLieService
                 'Accept: application/json',
             ]);
 
-            // Execute the cURL request
+            /**
+             * Execute the cURL request
+             */
             $response = curl_exec($ch);
 
-            // Check for cURL errors
+            /**
+             * Check for cURL errors
+             */
             if (curl_errno($ch)) {
                 return ['data' => [], 'error' => 'cURL Error: ' . curl_error($ch)];
             }
 
-            // Get the HTTP response code
+            /**
+             * Get the HTTP response code
+             */
             $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-            // Close cURL session
+            /**
+             * Close cURL session
+             */
             curl_close($ch);
 
-            // If the response code is 200 (OK), decode and return the response
+            /**
+             * If the response code is 200 (OK), decode and return the response
+             */
             if ($responseCode === 200) {
                 $data = json_decode($response, true);
                 return ($data);
@@ -124,16 +143,22 @@ class BallDontLieService
         $requestsMade = 0;
 
         do {
-            // Check rate limiting, if 30 requests have been made, sleep for a minute
+            /**
+             * Check rate limiting, if 30 requests have been made, sleep for a minute
+             */
             if ($requestsMade >= $this->maxRequestsPerMinute) {
                 sleep(60); // Sleep for 60 seconds
                 $requestsMade = 0; // Reset the counter
             }
 
-            // Fetch teams from API
+            /**
+             * Fetch teams from API
+             */
             $response = $this->performApiRequest('teams', $cursor);
 
-            // If response is valid, append data
+            /**
+             * If response is valid, append data
+             */
             if (isset($response['data']) && (sizeof($response['data']) > 0)) {
                 foreach ($response['data'] as $teamData) {
                     $this->teamRepository->updateOrCreate(
@@ -152,9 +177,14 @@ class BallDontLieService
                 break;
             }
 
-            // Get the next cursor for pagination
+            /**
+             * Get the next cursor for pagination
+             */
             $cursor = $response['meta']['next_cursor'] ?? null;
-            // Increment the request count
+
+            /**
+             * Increment the request count
+             */
             $requestsMade++;
 
         } while ($cursor); // Continue if there's a next cursor
