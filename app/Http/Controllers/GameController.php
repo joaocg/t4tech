@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Http\Resources\GameResource;
 use App\Http\Requests\GameRequest;
+use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GameController extends Controller
@@ -17,7 +18,6 @@ class GameController extends Controller
     public function __construct(GameRepositoryInterface $gameRepository)
     {
         $this->gameRepository = $gameRepository;
-        $this->middleware('auth:sanctum');
     }
 
     /**
@@ -36,10 +36,22 @@ class GameController extends Controller
      */
     public function store(GameRequest $request): GameResource
     {
-        $this->authorize('create', Game::class);
-
-        $game = $this->gameRepository->create($request->validated());
-        return new GameResource($game);
+        try {
+            $game = $this->gameRepository->create($request->validated());
+            return new GameResource($game);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Return validation errors with a 422 Unprocessable Entity status
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            // Catch any other exception and return a 500 error response
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -60,10 +72,22 @@ class GameController extends Controller
      */
     public function update(GameRequest $request, int $id): GameResource
     {
-        $this->authorize('update', Game::class);
-
-        $game = $this->gameRepository->update($id, $request->validated());
-        return new GameResource($game);
+        try {
+            $game = $this->gameRepository->update($id, $request->validated());
+            return new GameResource($game);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Return validation errors with a 422 Unprocessable Entity status
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            // Catch any other exception and return a 500 error response
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -73,8 +97,6 @@ class GameController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->authorize('delete', Game::class);
-
         $this->gameRepository->delete($id);
         return response()->json(['message' => 'Game deleted successfully']);
     }

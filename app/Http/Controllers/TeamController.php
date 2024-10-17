@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Repositories\Contracts\TeamRepositoryInterface;
 use App\Http\Resources\TeamResource;
 use App\Http\Requests\TeamRequest;
+use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TeamController extends Controller
@@ -17,7 +18,6 @@ class TeamController extends Controller
     public function __construct(TeamRepositoryInterface $teamRepository)
     {
         $this->teamRepository = $teamRepository;
-        $this->middleware('auth:sanctum');
     }
 
     /**
@@ -36,10 +36,22 @@ class TeamController extends Controller
      */
     public function store(TeamRequest $request): TeamResource
     {
-        $this->authorize('create', Team::class);
-
-        $team = $this->teamRepository->create($request->validated());
-        return new TeamResource($team);
+        try {
+            $team = $this->teamRepository->create($request->validated());
+            return new TeamResource($team);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Return validation errors with a 422 Unprocessable Entity status
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            // Catch any other exception and return a 500 error response
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -60,10 +72,22 @@ class TeamController extends Controller
      */
     public function update(TeamRequest $request, int $id): TeamResource
     {
-        $this->authorize('update', Team::class);
-
-        $team = $this->teamRepository->update($id, $request->validated());
-        return new TeamResource($team);
+        try{
+            $team = $this->teamRepository->update($id, $request->validated());
+            return new TeamResource($team);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Return validation errors with a 422 Unprocessable Entity status
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (Exception $e) {
+            // Catch any other exception and return a 500 error response
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -73,8 +97,6 @@ class TeamController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->authorize('delete', Team::class);
-
         $this->teamRepository->delete($id);
         return response()->json(['message' => 'Team deleted successfully']);
     }
