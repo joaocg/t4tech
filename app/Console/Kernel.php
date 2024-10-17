@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Schedule the import command to run daily
+        $schedule->command('import:sports-data')->daily();
     }
 
     /**
