@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Config;
 
 class VerifyAuthorization
 {
@@ -16,10 +16,17 @@ class VerifyAuthorization
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        $header = $request->header('X-Authorization');
-
-        if ($header !== config('app.x_authorization_key')) {
+        if (!$request->hasHeader('X-Authorization')) {
             return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Pega o token no cabeçalho
+        $token = $request->header('X-Authorization');
+        $configValue = Config::get('app.X_AUTHORIZATION_KEY');
+
+        // Validação do token (aqui você pode implementar a lógica de verificação)
+        if ($token !== $configValue) {
+            return response()->json(['error' => 'Invalid Token'], 401);
         }
 
         return $next($request);
