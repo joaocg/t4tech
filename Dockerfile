@@ -35,7 +35,7 @@ RUN chmod 0644 /etc/cron.d/laravel
 RUN crontab /etc/cron.d/laravel
 
 # Copy supervisord config
-COPY ./docker/cron/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Set working directory
 WORKDIR /var/www/html
@@ -44,3 +44,4 @@ WORKDIR /var/www/html
 CMD ["/usr/bin/supervisord"]
 
 ######
+
