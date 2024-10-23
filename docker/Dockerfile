@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     git \
     cron \
+    supervisor \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd \
     && docker-php-ext-install zip \
@@ -21,17 +22,25 @@ RUN apt-get update && apt-get install -y \
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Copy the Laravel application code
+COPY . /var/www/html
+
+# Add a cron job (run Laravel scheduler every minute)
+RUN echo "* * * * * www-data php /var/www/html/artisan schedule:run >> /dev/null 2>&1" >> /etc/cron.d/laravel
+
+# Give the file correct permissions
+RUN chmod 0644 /etc/cron.d/laravel
+
+# Apply cron job
+RUN crontab /etc/cron.d/laravel
+
+# Copy supervisord config
+COPY ./docker/cron/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Set working directory
 WORKDIR /var/www/html
 
-# Copie seu script de cron para o container (opcional)
-COPY ./docker/cron/laravel-cron /etc/cron.d/laravel-cron
+# Ensure cron is started and run supervisord to manage processes
+CMD ["/usr/bin/supervisord"]
 
-# Defina as permissões corretas para o cron
-RUN chmod 0644 /etc/cron.d/laravel-cron
-
-# Aplicar os crons
-RUN crontab /etc/cron.d/laravel-cron
-
-# Iniciar o cron no background
-CMD ["cron", "-f"]
+######

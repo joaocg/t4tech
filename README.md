@@ -31,6 +31,10 @@ Este guia ensina como configurar e executar o ambiente Docker para o seu projeto
 
 Dependendo da versão do Docker que você está usando, o comando para executar o Docker Compose pode variar:
 
+  ```
+  Você não deve ter outros serviços rodando nas portas 3306 e 8000.
+  Se tiver, deve parar pois o docker vai utilizar essas portas para o projeto.
+  ```
 - **Para versões do Docker abaixo de `v2.0.0`**, use o comando com o hífen:
 
   ```bash
