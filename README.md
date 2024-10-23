@@ -1,5 +1,54 @@
 # Projeto Laravel 10 - Gerenciamento de Informações Esportivas (API REST)
 
+---------------------------------------
+# Deploy do projeto ```` com o  Docker ````
+
+---------------------------------------
+## Passos para Configuração do Ambiente
+
+Siga os passos abaixo para configurar o ambiente e rodar o projeto:
+
+1. Clone o repositório do projeto:
+
+````
+    git clone https://github.com/joaocg/t4tech
+````
+
+2. Navegue até o diretório do projeto:
+
+````
+cd t4tech
+````
+## Instruções para executar o Docker Compose no Laravel
+
+Este guia ensina como configurar e executar o ambiente Docker para o seu projeto Laravel usando Docker Compose.
+
+## Pré-requisitos
+
+- **Docker**: Certifique-se de ter o Docker instalado em sua máquina. Se você ainda não instalou, consulte o site oficial do Docker para instruções de instalação: [Docker Install](https://docs.docker.com/get-docker/).
+
+### Executando o Docker Compose
+
+Dependendo da versão do Docker que você está usando, o comando para executar o Docker Compose pode variar:
+
+- **Para versões do Docker abaixo de `v2.0.0`**, use o comando com o hífen:
+
+  ```bash
+  docker-compose up -d
+
+- **Para versões mais recentes do Docker `(v2.0.0 e acima)`**, use o comando com o hífen:
+
+  ```bash
+  docker compose up -d
+
+### Acessando a Aplicação Laravel
+Depois de executar o comando docker-compose ou docker compose, a aplicação Laravel estará rodando em um container. Você pode acessá-la em seu navegador na seguinte URL:
+[Projeto Laravel 10](http://localhost:8000/)
+
+---------------------------------------
+# Deploy do projeto ```` sem o Docker ````
+
+---------------------------------------
 ## Requisitos Necessários
 
 Para rodar este projeto Laravel 10, certifique-se de ter os seguintes requisitos instalados no seu ambiente:
