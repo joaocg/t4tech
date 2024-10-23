@@ -25,7 +25,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 WORKDIR /var/www/html
 
 # Copie seu script de cron para o container (opcional)
-COPY cron/laravel-cron /etc/cron.d/laravel-cron
+COPY ./docker/cron/laravel-cron /etc/cron.d/laravel-cron
 
 # Defina as permissões corretas para o cron
 RUN chmod 0644 /etc/cron.d/laravel-cron
