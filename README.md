@@ -1,3 +1,4 @@
+
 # Projeto Laravel 10 - Gerenciamento de Informações Esportivas (API REST)
 
 ---------------------------------------
@@ -59,41 +60,41 @@ Para acompanhar os logs do container `laravel_app`, você pode utilizar tanto o 
 
 1. **Abra o Docker Desktop**: Inicie o aplicativo Docker Desktop em sua máquina.
 
-2. **Localize seu container**: 
-   - No painel esquerdo, clique na aba **Containers**.
-   - Encontre o container chamado `laravel_app` na lista de containers em execução.
+2. **Localize seu container**:
+    - No painel esquerdo, clique na aba **Containers**.
+    - Encontre o container chamado `laravel_app` na lista de containers em execução.
 
 3. **Visualize os logs**:
-   - Clique no container `laravel_app`.
-   - Na parte inferior da tela, você verá uma aba chamada **Logs**. Clique nela.
-   - Os logs do container serão exibidos em tempo real. Você pode acompanhar as mensagens até que apareça a linha indicando que as rotas foram carregadas:
-     ```
-     Finish!
-     ```
+    - Clique no container `laravel_app`.
+    - Na parte inferior da tela, você verá uma aba chamada **Logs**. Clique nela.
+    - Os logs do container serão exibidos em tempo real. Você pode acompanhar as mensagens até que apareça a linha indicando que as rotas foram carregadas:
+      ```
+      Finish!
+      ```
 
 ## 2. Acompanhando os Logs via CLI
 
 1. **Abra seu terminal**.
 
-2. **Verifique se o Docker está em execução**: 
-   - Use o comando abaixo para garantir que o Docker esteja ativo:
-     ```bash
-     docker info
-     ```
-   - Se o Docker estiver em execução, você verá várias informações sobre o estado atual do Docker.
+2. **Verifique se o Docker está em execução**:
+    - Use o comando abaixo para garantir que o Docker esteja ativo:
+      ```bash
+      docker info
+      ```
+    - Se o Docker estiver em execução, você verá várias informações sobre o estado atual do Docker.
 
 3. **Use o comando `docker logs`**:
-   - Para visualizar os logs do container `laravel_app`, execute:
-     ```bash
-     docker logs -f laravel_app
-     ```
-   - O parâmetro `-f` (ou `--follow`) permite que os logs sejam exibidos em tempo real, possibilitando o acompanhamento de novas entradas.
+    - Para visualizar os logs do container `laravel_app`, execute:
+      ```bash
+      docker logs -f laravel_app
+      ```
+    - O parâmetro `-f` (ou `--follow`) permite que os logs sejam exibidos em tempo real, possibilitando o acompanhamento de novas entradas.
 
 4. **Verifique as mensagens**:
-   - Continue monitorando os logs até ver a linha:
-     ```
-     Finish!
-     ```
+    - Continue monitorando os logs até ver a linha:
+      ```
+      Finish!
+      ```
 
 ### Agora você pode acessar a Aplicação Laravel
 Depois de executar o comando docker-compose ou docker compose, a aplicação Laravel estará rodando em um container. Você pode acessá-la em seu navegador na seguinte URL:
@@ -117,12 +118,12 @@ Para rodar este projeto Laravel 10, certifique-se de ter os seguintes requisitos
 - MySQL 5.7 ou superior / MariaDB
 - Git (opcional, mas recomendado)
 - Extensões PHP necessárias:
-  - `mbstring`
-  - `openssl`
-  - `pdo`
-  - `json`
-  - `xml`
-  - `curl`
+    - `mbstring`
+    - `openssl`
+    - `pdo`
+    - `json`
+    - `xml`
+    - `curl`
 
 ## Passos para Configuração do Ambiente
 
@@ -203,7 +204,36 @@ env
 DB_CONNECTION=sqlite
 DB_DATABASE=:memory:
 ````
+
 Isso garantirá que os testes utilizem um banco em memória e que não modifiquem o banco de dados principal.
+
+## Como Rodar os Testes no Docker
+
+Se você estiver utilizando Docker para rodar o projeto, siga os passos abaixo para rodar os testes unitários dentro do container.
+
+1. Entre no container onde o Laravel está rodando:
+
+   ```bash
+   docker exec -it laravel_app bash
+   ```
+
+   O comando acima abre um terminal interativo dentro do container chamado `laravel_app`.
+
+2. Dentro do container, execute os testes utilizando o PHPUnit:
+
+   ```bash
+   php artisan test
+   ```
+
+   Isso irá rodar os testes de unidade e de integração dentro do ambiente Docker.
+
+3. Você também pode filtrar os testes que deseja executar:
+
+   ```bash
+   php artisan test --filter=NomeDoTeste
+   ```
+
+Seguindo esses passos, você pode rodar os testes de forma similar à execução fora do Docker, porém dentro do ambiente isolado que o Docker proporciona.
 
 ## Como Utilizar o Comando de Importação de Dados
 O projeto inclui um comando para importar dados esportivos de uma API externa.
@@ -224,8 +254,6 @@ Esse comando foi configurado para ser executado automaticamente uma vez por dia 
 ````
 
 Essa entrada no cron vai verificar o agendamento a cada minuto e executar os comandos agendados. O comando de importação de dados será executado uma vez por dia.
-
-
 
 ### Autorização / Autenticação:
 ````
