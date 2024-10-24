@@ -49,6 +49,12 @@ Dependendo da versão do Docker que você está usando, o comando para executar 
 
 Para acompanhar os logs do container `laravel_app`, você pode utilizar tanto o Docker Desktop quanto a linha de comando (CLI). Siga as instruções abaixo para cada método.
 
+  ```
+  Os logs desse container docker está contido o passo a passo da execução 
+  da aplicação em laravel. Composer install, php artisan migrate, 
+  php artisan db:seed, php artisan optimize e um dos principais o 
+  php artisan import:sports-data reponsável por importar os dados da api externa.
+  ```
 ## 1. Acompanhando os Logs no Docker Desktop
 
 1. **Abra o Docker Desktop**: Inicie o aplicativo Docker Desktop em sua máquina.
