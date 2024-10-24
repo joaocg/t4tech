@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && docker-php-ext-install pdo_mysql
 
+# Instalar o Composer
+COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -36,6 +39,9 @@ RUN crontab /etc/cron.d/laravel
 
 # Copy supervisord config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Execute o Composer install (isso assume que você tenha o composer.json no diretório)
+RUN composer install --no-scripts --no-autoloader
 
 # Set working directory
 WORKDIR /var/www/html
