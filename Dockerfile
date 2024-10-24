@@ -40,8 +40,6 @@ RUN crontab /etc/cron.d/laravel
 # Copy supervisord config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Execute o Composer install (isso assume que você tenha o composer.json no diretório)
-RUN composer install --no-scripts --no-autoloader
 
 # Set working directory
 WORKDIR /var/www/html

@@ -14,25 +14,31 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name' => 'Gestor',
-            'email' => 'gestor@isp.app',
-            'password' => Hash::make('12341234'),
-            'is_admin' => true
-        ]);
+        DB::table('users')->updateOrInsert(
+            ['email' => 'gestor@isp.app'],
+            [
+                'name' => 'Gestor',
+                'password' => Hash::make('12341234'),
+                'is_admin' => true
+            ]
+        );
 
-        DB::table('users')->insert([
-            'name' => 'Usuario 1',
-            'email' => 'user1@isp.app',
-            'password' => Hash::make('12341234'),
-            'is_admin' => false
-        ]);
+        DB::table('users')->updateOrInsert(
+            ['email' => 'user1@isp.app'],
+            [
+                'name' => 'Usuario 1',
+                'password' => Hash::make('12341234'),
+                'is_admin' => false
+            ]
+        );
 
-        DB::table('users')->insert([
-            'name' => 'Usuario 2',
-            'email' => 'user2@isp.app',
-            'password' => Hash::make('12341234'),
-            'is_admin' => false
-        ]);
+        DB::table('users')->updateOrInsert(
+            ['email' => 'user2@isp.app'],
+            [
+                'name' => 'Usuario 2',
+                'password' => Hash::make('12341234'),
+                'is_admin' => false
+            ]
+        );
     }
 }

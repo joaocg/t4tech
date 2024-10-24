@@ -25,6 +25,7 @@ done
 echo "MySQL is ready. Running Laravel commands..."
 
 # Run Laravel commands
+composer install
 php artisan key:generate
 php artisan migrate --force
 php artisan db:seed --force
