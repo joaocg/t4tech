@@ -45,6 +45,57 @@ Dependendo da versão do Docker que você está usando, o comando para executar 
   ```bash
   docker compose up -d
 
+# Acompanhando os Logs do Container Laravel
+
+Para acompanhar os logs do container `laravel_app`, você pode utilizar tanto o Docker Desktop quanto a linha de comando (CLI). Siga as instruções abaixo para cada método.
+
+## 1. Acompanhando os Logs no Docker Desktop
+
+1. **Abra o Docker Desktop**: Inicie o aplicativo Docker Desktop em sua máquina.
+
+2. **Localize seu container**: 
+   - No painel esquerdo, clique na aba **Containers**.
+   - Encontre o container chamado `laravel_app` na lista de containers em execução.
+
+3. **Visualize os logs**:
+   - Clique no container `laravel_app`.
+   - Na parte inferior da tela, você verá uma aba chamada **Logs**. Clique nela.
+   - Os logs do container serão exibidos em tempo real. Você pode acompanhar as mensagens até que apareça a linha indicando que as rotas foram carregadas:
+     ```
+     routes ........................................................... 18ms DONE
+     ```
+
+## 2. Acompanhando os Logs via CLI
+
+1. **Abra seu terminal**.
+
+2. **Verifique se o Docker está em execução**: 
+   - Use o comando abaixo para garantir que o Docker esteja ativo:
+     ```bash
+     docker info
+     ```
+   - Se o Docker estiver em execução, você verá várias informações sobre o estado atual do Docker.
+
+3. **Use o comando `docker logs`**:
+   - Para visualizar os logs do container `laravel_app`, execute:
+     ```bash
+     docker logs -f laravel_app
+     ```
+   - O parâmetro `-f` (ou `--follow`) permite que os logs sejam exibidos em tempo real, possibilitando o acompanhamento de novas entradas.
+
+4. **Verifique as mensagens**:
+   - Continue monitorando os logs até ver a linha:
+     ```
+     routes ........................................................... 18ms DONE
+     ```
+
+## Dicas Adicionais
+
+- **Parar o acompanhamento**: Para interromper a visualização dos logs no terminal, pressione `Ctrl + C`.
+- **Logs com timestamps**: Para incluir timestamps nos logs, utilize:
+  ```bash
+  docker logs -f --timestamps laravel_app
+
 ### Acessando a Aplicação Laravel
 Depois de executar o comando docker-compose ou docker compose, a aplicação Laravel estará rodando em um container. Você pode acessá-la em seu navegador na seguinte URL:
 [Projeto Laravel 10](http://localhost:8000/)
