@@ -96,7 +96,7 @@ Depois de executar o comando docker-compose ou docker compose, a aplicação Lar
 ### Importação dos dados da APi Externa
 
 A Importação dos dados da Api de eportes são feitas por um comando do laravel o que dependendo da configuração da maquina que o docker está rodando, pode variar o tempo para os dados serem totalmente importados para a base local do docker.
-Quando a importação é concluida
+Quando a importação é concluida.
 
 ---------------------------------------
 # Deploy do projeto ```` sem o Docker ````
