@@ -31,5 +31,9 @@ php artisan migrate --force
 php artisan db:seed --force
 php artisan optimize
 
+echo "Start Imports players, teams, and games from BallDontLie API..."
+php artisan import:sports-data
+echo "Finish!"
+
 # Start PHP-FPM
 exec php-fpm
