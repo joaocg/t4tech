@@ -89,16 +89,14 @@ Para acompanhar os logs do container `laravel_app`, você pode utilizar tanto o 
      routes ........................................................... 18ms DONE
      ```
 
-## Dicas Adicionais
-
-- **Parar o acompanhamento**: Para interromper a visualização dos logs no terminal, pressione `Ctrl + C`.
-- **Logs com timestamps**: Para incluir timestamps nos logs, utilize:
-  ```bash
-  docker logs -f --timestamps laravel_app
-
-### Acessando a Aplicação Laravel
+### Agora você pode acessar a Aplicação Laravel
 Depois de executar o comando docker-compose ou docker compose, a aplicação Laravel estará rodando em um container. Você pode acessá-la em seu navegador na seguinte URL:
 [Projeto Laravel 10](http://localhost:8000/)
+
+### Importação dos dados da APi Externa
+
+A Importação dos dados da Api de eportes são feitas por um comando do laravel o que dependendo da configuração da maquina que o docker está rodando, pode variar o tempo para os dados serem totalmente importados para a base local do docker.
+Quando a importação é concluida
 
 ---------------------------------------
 # Deploy do projeto ```` sem o Docker ````
