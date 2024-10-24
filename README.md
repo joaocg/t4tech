@@ -68,7 +68,7 @@ Para acompanhar os logs do container `laravel_app`, você pode utilizar tanto o 
    - Na parte inferior da tela, você verá uma aba chamada **Logs**. Clique nela.
    - Os logs do container serão exibidos em tempo real. Você pode acompanhar as mensagens até que apareça a linha indicando que as rotas foram carregadas:
      ```
-     routes ........................................................... 18ms DONE
+     Finish!
      ```
 
 ## 2. Acompanhando os Logs via CLI
@@ -92,7 +92,7 @@ Para acompanhar os logs do container `laravel_app`, você pode utilizar tanto o 
 4. **Verifique as mensagens**:
    - Continue monitorando os logs até ver a linha:
      ```
-     routes ........................................................... 18ms DONE
+     Finish!
      ```
 
 ### Agora você pode acessar a Aplicação Laravel
@@ -102,7 +102,7 @@ Depois de executar o comando docker-compose ou docker compose, a aplicação Lar
 ### Importação dos dados da APi Externa
 
 A Importação dos dados da Api de eportes são feitas por um comando do laravel o que dependendo da configuração da maquina que o docker está rodando, pode variar o tempo para os dados serem totalmente importados para a base local do docker.
-Quando a importação é concluida.
+Quando a importação é concluida, um segundo comando CRON será executado sempre as 0:00h de cada dia atualizando essas informações conforme solicitado.
 
 ---------------------------------------
 # Deploy do projeto ```` sem o Docker ````
